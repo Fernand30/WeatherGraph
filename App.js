@@ -42,9 +42,24 @@ export default class App extends Component<Props> {
   constructor(props){
     super(props);
     this.state=({
-      index: 0,
-      value: 0
+      index: 3,
+      value: 3
     })
+  }
+  renderDot(x,y,index,value){
+    if(index==this.state.index) fillColor = 'white'
+      else fillColor = '#3a7dd8'
+      return(
+            <Circle
+              key={ index }
+              cx={ x(index) }
+              cy={ y(value) }
+              r={ 4 }
+              stroke = {'#144a94'}
+              fill={ fillColor }
+              onPress={ () => this.setState({index: index,value: value }) }
+            />
+           ) 
   }
   render() {  
     Xlabel = <View/>
@@ -59,7 +74,7 @@ export default class App extends Component<Props> {
                   fill="#000"
                   textAnchor="start"
               >
-                  Aug 09,2017</Text> 
+                  {dataDate[i]}</Text> 
         )
     })
 
@@ -75,28 +90,35 @@ export default class App extends Component<Props> {
                   fill="#000"
                   textAnchor="start"
               >
-                  Aug 09,2017</Text> 
+                  {dataDate[i]}</Text> 
         )
     })
 
         const Tooltip = ({ x, y }) => (
             <G
                 x={ x(this.state.index) }
+                y = { 65-y(this.state.index)}
                 key={ 'tooltip' }
-                
             > 
               <Rect
-                        height={ 30 }
-                        width={ 100 }
+                        height={ 25 }
+                        width={ 90 }
                         stroke={ 'black' }
                         fill={ 'black' }
                         ry={ 10 }
                         rx={ 10 }
-                        x={ -45}
-                        y={ 0}
+                        x={ -50}
+                        y={ 5}
                     />
+
+                  <Polygon
+                      points="-5,30 5,30 0,40"
+                      stroke={ 'black' }
+                      fill={ 'black' }
+                      strokeWidth="1"
+                  />
               <Text
-                  x={ 5 }
+                  x={ -5}
                   y={ 20 }
                   textAnchor={ 'middle' }
                   stroke={ 'white' }
@@ -114,7 +136,7 @@ export default class App extends Component<Props> {
         >
         <Text
                     x="50"
-                    y="40"
+                    y="75"
                     size="30"
                     stroke="#600"
                     fill="#600"
@@ -169,23 +191,13 @@ export default class App extends Component<Props> {
                       contentInset={ { top: 10, left: 5,right: 10, bottom: 15} }
                       curve={shape.curveNatural}
                       svg={{
-                          fill: 'rgba(134, 65, 244, 0.2)',
-                          stroke: 'rgb(134, 65, 244)',
+                          fill: '#6299e5',
+                          stroke: '#144a94',
                       }}
                       extras={ [  Tooltip ] }
                       renderExtra={ ({ item, ...args }) => item(args) }
 
-                      renderDecorator={ ({ x, y, index, value }) => (
-                        <Circle
-                          key={ index }
-                          cx={ x(index) }
-                          cy={ y(value) }
-                          r={ 4 }
-                          stroke={ 'rgb(134, 65, 244)' }
-                          fill={ 'white' }
-                          onPress={ () => this.setState({index: index,value: value }) }
-                        />
-                    ) }
+                      renderDecorator={ ({ x, y, index, value }) => this.renderDot(x, y, index, value)}
                   />
         </View>    
         
@@ -270,8 +282,8 @@ export default class App extends Component<Props> {
                       contentInset={ { top: 5, left: 5,right: 10, bottom: 5} }
                       curve={shape.curveNatural}
                       svg={{
-                          fill: 'rgba(134, 65, 244, 0.2)',
-                          stroke: 'rgb(134, 65, 244)',
+                          fill: '#6299e5',
+                          stroke: '#144a94',
                       }}
                       renderDecorator={ ({ x, y, index, value }) => (
                         <Circle
